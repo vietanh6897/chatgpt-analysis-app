@@ -1,0 +1,113 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+th,
+td {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+th {
+  background-color: #f2f2f2;
+}
+
+.view {
+  margin: auto;
+  width: 1200px;
+}
+
+.wrapper {
+  position: relative;
+  overflow: auto;
+  border: 1px solid black;
+  white-space: nowrap;
+}
+
+.sticky-col {
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: #f2f2f2;
+}
+.first-col {
+  width: 170px;
+  min-width: 170px;
+  max-width: 170px;
+  left: 0px;
+  z-index: 10;
+  border-left: 0px;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.page-numbers {
+  display: flex;
+}
+
+.page-number {
+  padding: 5px 10px;
+  margin: 0 2px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.page-number.active {
+  background-color: #007bff;
+  color: #fff;
+}
+.revenue-surge {
+  background-color: green;
+}
+.identical-income-expenses {
+  background-color: chocolate;
+}
+.profit-drop {
+  background-color: red;
+}
+.data-not-captured {
+  background-color: #ccc;
+}
+
+/* Tooltip */
+.tooltip {
+  position: relative;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+  bottom: 25px;
+  left: 56px;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

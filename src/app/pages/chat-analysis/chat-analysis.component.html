@@ -1,0 +1,179 @@
+<div class="view">
+  <h2>Income and Profit per company per month</h2>
+  <i>{{ (last12MonthsDate | date) + " - " + (currentDate | date) }}</i>
+  <div class="wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th rowspan="3" class="sticky-col first-col">Company Name</th>
+          @for (year of tableHeader.years; track year) {
+          <th [colSpan]="year.colspan">
+            {{ year.title }}
+          </th>
+          }
+        </tr>
+        <tr>
+          @for (month of tableHeader.months.titles; track month) {
+          <th [colSpan]="2">
+            {{ month }}
+          </th>
+          }
+        </tr>
+        <tr>
+          @for (month of tableHeader.months.titles; track month) {
+          <th>Income</th>
+          <th>Profit</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (company of renderKeys; track company) {
+        <tr>
+          <td class="sticky-col first-col">{{ company }}</td>
+          @for (year of tableHeader.years; track year) { @for (month of
+          year.monthsOfYear; track month) {
+          <td
+            class="tooltip"
+            [ngClass]="{
+              'revenue-surge':
+                dataTable[company] &&
+                dataTable[company][year.title] &&
+                dataTable[company][year.title][month] &&
+                dataTable[company][year.title][month].revenueSurge,
+              'identical-income-expenses':
+                dataTable[company] &&
+                dataTable[company][year.title] &&
+                dataTable[company][year.title][month] &&
+                dataTable[company][year.title][month].identical,
+              'data-not-captured':
+                dataTable[company] &&
+                (!dataTable[company][year.title] ||
+                  !dataTable[company][year.title][month] ||
+                  !dataTable[company][year.title][month].totalIncome)
+            }"
+          >
+            <span
+              class="tooltiptext"
+              *ngIf="
+                dataTable[company] &&
+                dataTable[company][year.title] &&
+                dataTable[company][year.title][month] &&
+                dataTable[company][year.title][month].revenueSurge
+              "
+              >Revenue Surge</span
+            >
+            <span
+              class="tooltiptext"
+              *ngIf="
+                dataTable[company] &&
+                dataTable[company][year.title] &&
+                dataTable[company][year.title][month] &&
+                dataTable[company][year.title][month].identical
+              "
+              >Identical Income and Expenses</span
+            >
+            <span
+              class="tooltiptext"
+              *ngIf="
+                dataTable[company] &&
+                (!dataTable[company][year.title] ||
+                  !dataTable[company][year.title][month] ||
+                  !dataTable[company][year.title][month].totalIncome)
+              "
+              >Data not Captured</span
+            >
+            {{
+              dataTable[company] &&
+              dataTable[company][year.title] &&
+              dataTable[company][year.title][month]
+                ? (dataTable[company][year.title][month]?.totalIncome
+                    | number : "1.0-2") +
+                  (dataTable[company][year.title][month].incomeRate
+                    ? dataTable[company][year.title][month].incomeRate > 0
+                      ? " +" +
+                        (dataTable[company][year.title][month].incomeRate
+                          | percent)
+                      : " " +
+                        (dataTable[company][year.title][month].incomeRate
+                          | percent)
+                    : "")
+                : ""
+            }}
+          </td>
+          <td
+            class="tooltip"
+            [ngClass]="{
+              'profit-drop':
+                dataTable[company] &&
+                dataTable[company][year.title] &&
+                dataTable[company][year.title][month] &&
+                dataTable[company][year.title][month].profitDrop,
+              'identical-income-expenses':
+                dataTable[company] &&
+                dataTable[company][year.title] &&
+                dataTable[company][year.title][month] &&
+                dataTable[company][year.title][month].identical
+            }"
+          >
+            <span
+              class="tooltiptext"
+              *ngIf="
+                dataTable[company] &&
+                dataTable[company][year.title] &&
+                dataTable[company][year.title][month] &&
+                dataTable[company][year.title][month].profitDrop
+              "
+              >Extreme Profit Drop</span
+            >
+            <span
+              class="tooltiptext"
+              *ngIf="
+                dataTable[company] &&
+                dataTable[company][year.title] &&
+                dataTable[company][year.title][month] &&
+                dataTable[company][year.title][month].identical
+              "
+              >Identical Income and Expenses</span
+            >
+            {{
+              dataTable[company] &&
+              dataTable[company][year.title] &&
+              dataTable[company][year.title][month]
+                ? (dataTable[company][year.title][month]?.profit
+                    | number : "1.0-2") +
+                  (dataTable[company][year.title][month].profitRate
+                    ? dataTable[company][year.title][month].profitRate > 0
+                      ? " +" +
+                        (dataTable[company][year.title][month].profitRate
+                          | percent)
+                      : " " +
+                        (dataTable[company][year.title][month].profitRate
+                          | percent)
+                    : "")
+                : ""
+            }}
+          </td>
+          } }
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination">
+    <button
+      class="page-button prev-button"
+      (click)="renderPageNumber(currentPage - 1)"
+      [disabled]="currentPage === 1"
+    >
+      &lt;
+    </button>
+    <div class="page-numbers">{{ currentPage }} / {{ totalPage }}</div>
+    <button
+      class="page-button next-button"
+      (click)="renderPageNumber(currentPage + 1)"
+      [disabled]="currentPage === totalPage"
+    >
+      &gt;
+    </button>
+  </div>
+</div>
